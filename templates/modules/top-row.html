@@ -9,9 +9,28 @@
       <div
         class="card-base mx-auto flex h-[4.5rem] max-w-[var(--page-width)] items-center justify-between !overflow-visible !rounded-t-none px-4"
       >
-        <a th:href="@{/}" class="btn-plain scale-animation h-[3.25rem] rounded-lg px-5 font-bold active:scale-95">
-          <div class="text-md flex flex-row items-center text-[var(--primary)]">
-            <span class="icon-[tabler--smart-home] mb-1 mr-2 text-[1.75rem]"></span> [[${site.title}]]
+        <a
+          th:href="@{/}"
+          class="btn-plain scale-animation flex h-[3.25rem] items-center rounded-lg px-5 font-bold active:scale-95"
+        >
+          <div class="text-md flex h-full flex-row items-center text-[var(--primary)]">
+            <th:block th:if="${theme.config.base.logo.type == 'icon'}">
+              <span th:class="|${theme.config.base.logo.icon} text-[1.75rem]| mr-2"></span>
+            </th:block>
+
+            <th:block
+              th:if="${theme.config.base.logo.type == 'image' and not #strings.isEmpty(theme.config.base.logo.image)}"
+            >
+              <div class="mr-2 h-full py-2">
+                <img
+                  th:src="${theme.config.base.logo.image}"
+                  class="h-full w-auto object-contain object-center"
+                  th:alt="${site.title}"
+                />
+              </div>
+            </th:block>
+
+            <span class="flex items-center">[[${site.title}]]</span>
           </div>
         </a>
         <div

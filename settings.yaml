@@ -28,6 +28,33 @@ spec:
               value: false
               help: "隐藏访问者的主题彩色选择器"
         - $formkit: group
+          name: logo
+          label: 站点 Logo 设置
+          value:
+            type: icon
+            icon: "icon-[tabler--smart-home]"
+            image: ""
+          children:
+            - $formkit: select
+              name: type
+              label: Logo 类型
+              value: "icon"
+              options:
+                - label: 图标 (Iconify)
+                  value: icon
+                - label: 自定义图片
+                  value: image
+            - $formkit: text
+              name: icon
+              if: "$value.type === 'icon'"
+              label: 图标 Class
+              value: "icon-[tabler--smart-home]"
+              help: "支持 Iconify 格式，例如 icon-[tabler--smart-home]"
+            - $formkit: attachment
+              name: image
+              label: Logo 图片
+              help: "上传或选择你的站点 Logo 图片"
+        - $formkit: group
           name: banner
           label: Banner
           value:
@@ -100,7 +127,7 @@ spec:
           name: menu
           label: 菜单
           value: ""
-          help: "选择菜单(仅支持一级菜单)"
+          help: "选择菜单"
     - group: style
       label: 样式
       formSchema:
