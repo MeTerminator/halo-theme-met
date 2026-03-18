@@ -1,10 +1,16 @@
-/* 目录容器限高并开启滚动 */
-.toc-container .toc {
+.toc {
+    position: relative;
+    /* 必须有，否则计算偏移会出错 */
     max-height: 60vh;
-    /* 设置最大高度为屏幕高度的 60% */
+    /* 限制高度 */
     overflow-y: auto;
-    /* 溢出显示滚动条 */
-    padding-right: 8px;
+    /* 开启内部滚动 */
+    scroll-behavior: smooth;
+}
+
+/* 即使 Tocbot 尝试置顶，这个 CSS 也能保底留出间距 */
+.toc .toc-link {
+    scroll-margin-top: 20px;
 }
 
 /* 隐藏原生滚动条并优化样式 (对应你项目中已有的 scrollbar 逻辑) */
@@ -29,6 +35,18 @@
 }
 
 /* 激活项的视觉引导 */
+/* 文章目录激活项样式 */
+.is-active-link {
+    /* 使用 !important (即 Tailwind 的 !) 确保覆盖 opacity-70 */
+    @apply opacity-100 font-bold !important;
+
+    /* 设置文字颜色为主题色 */
+    color: var(--primary) !important;
+
+    /* 如果有背景色需求也可以加在这里 */
+    background-color: var(--btn-plain-bg-hover);
+}
+
 .is-active-link {
     position: relative;
 }
@@ -36,11 +54,11 @@
 .is-active-link::before {
     content: "";
     position: absolute;
-    left: -12px;
+    left: -8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 4px;
-    height: 16px;
-    background: var(--primary);
+    width: 3px;
+    height: 14px;
+    background-color: var(--primary);
     border-radius: 2px;
 }

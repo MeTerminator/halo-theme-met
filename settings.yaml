@@ -109,19 +109,13 @@ spec:
           name: toc
           label: 目录
           value:
-            enable: false
-            max_depth: 2
+            enable: true
           children:
             - $formkit: checkbox
               name: enable
               label: 启用
-              value: false
+              value: true
               help: "启用目录"
-            - $formkit: number
-              name: max_depth
-              label: 最大深度
-              value: 2
-              help: "目录的最大深度"
         - $formkit: menuRadio
           id: menu
           name: menu

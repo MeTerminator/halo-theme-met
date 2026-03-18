@@ -60,7 +60,7 @@ window.fuwari = {
 };
 const swup = new Swup({
   animationSelector: '[class*="transition-swup-"]',
-  containers: ["main"],
+  containers: ["main", "#sidebar-sticky"],
   plugins: [
     new SwupHeadPlugin({ persistAssets: true }),
     new SwupPreloadPlugin(),
@@ -78,6 +78,13 @@ Alpine.data("share", share);
 Alpine.data("uiPermission", uiPermission);
 Alpine.data("articleStats", articleStats);
 Alpine.start();
+
+function initPageFunctions() {
+  console.log("Initializing page functions...");
+  mountWidgets(); // 重新挂载 Preact 组件（Search, TOC 等）
+  initNoteBlocks(); // 初始化笔记块
+  generateToc(); // 初始化 Tocbot
+}
 
 function getThemeConfig(): ThemeConfig | undefined {
   const el = document.querySelector<HTMLScriptElement>("#theme-config");
@@ -119,11 +126,12 @@ function mountWidgets() {
 }
 
 export function generateToc(): void {
+  console.log("Generating table of contents...");
   const content = document.getElementById("content");
   // 确保扫描到 h1-h4
   const titles = content?.querySelectorAll("h1, h2, h3, h4");
-
   const tocContainer = document.querySelector(".toc-container");
+
   if (!titles || titles.length === 0) {
     tocContainer?.classList.add("hidden");
     return;
@@ -139,12 +147,16 @@ export function generateToc(): void {
     headingSelector: "h1, h2, h3, h4",
     orderedList: false,
     collapseDepth: 0,
+    tocScrollOffset: 60,
+    headingsOffset: 150,
+
     extraListClasses: "space-y-1 ml-2",
     extraLinkClasses:
       "group block rounded py-1 px-2 transition-all hover:bg-black/5 dark:hover:bg-white/5 text-sm opacity-70",
-    activeLinkClass: "is-active-link !opacity-100 !text-[var(--primary)] font-bold",
-    headingsOffset: 80,
+    activeLinkClass: "is-active-link",
+
     scrollSmooth: true,
+    disableTocScrollSync: false,
   });
 }
 
@@ -454,6 +466,7 @@ const setupLightbox = () => {
     createPhotoSwipe();
   }
   swup.hooks.on("page:view", () => {
+    initPageFunctions();
     createPhotoSwipe();
   });
 
@@ -472,7 +485,7 @@ setupLightbox();
 // 页面初始加载
 document.addEventListener("DOMContentLoaded", () => {
   init();
-  mountWidgets();
+  initPageFunctions();
   loadButtonScript();
   setClickOutsideToClose("display-setting", ["display-setting", "display-settings-switch"]);
   setClickOutsideToClose("nav-menu-panel", ["nav-menu-panel", "nav-menu-switch"]);
@@ -536,15 +549,11 @@ swup.hooks.on("visit:start", () => {
 });
 swup.hooks.on("content:replace", () => {
   console.log("Content replaced");
-  // mountWidgets();
-  initNoteBlocks(); // 新增：内容替换后额外调用（确保 Swup 钩子中已调用，但这里作为备份）
-  generateToc();
+  initPageFunctions();
 });
 
 // 页面初始加载
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
-  mountWidgets();
-  initNoteBlocks(); // 新增：DOM 加载后额外调用（确保初始加载生效）
-  generateToc();
+  initPageFunctions();
 });
