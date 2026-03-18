@@ -47,7 +47,7 @@ Fuwari 主题支持以下 Halo 插件：
 - [x] 卡片化设计
 - [x] 响应式主题
 - [x] 深色模式
-- [ ] 文章目录
+- [x] 文章目录
 - [X] [代码高亮/语言/复制](https://github.com/halo-sigs/plugin-highlightjs)（插件）
 - [x] [文章搜索](https://github.com/halo-sigs/plugin-search-widget)（插件）
 - [x] 显示字数统计
@@ -59,7 +59,6 @@ Fuwari 主题支持以下 Halo 插件：
 ### TODO
 - [ ] 图库（/photos）：https://halo.run/store/apps/app-BmQJW
 - [ ] 瞬间（/moments）：https://halo.run/store/apps/app-SnwWD
-- [ ] 文章目录
 - [ ] 优化暗亮色切换闪烁问题
 ### 开发
 

@@ -1,0 +1,46 @@
+/* 目录容器限高并开启滚动 */
+.toc-container .toc {
+    max-height: 60vh;
+    /* 设置最大高度为屏幕高度的 60% */
+    overflow-y: auto;
+    /* 溢出显示滚动条 */
+    padding-right: 8px;
+}
+
+/* 隐藏原生滚动条并优化样式 (对应你项目中已有的 scrollbar 逻辑) */
+.toc::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+    opacity: 0.2;
+}
+
+/* 层次感缩进：Tocbot 会生成嵌套的 ul/ol */
+.toc .toc-list .toc-list {
+    @apply ml-4 border-l border-neutral-200 dark:border-neutral-700;
+    /* 为子标题添加左边框和间距，增强层次感 */
+}
+
+.toc .toc-list-item {
+    @apply mt-1;
+}
+
+/* 激活项的视觉引导 */
+.is-active-link {
+    position: relative;
+}
+
+.is-active-link::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 16px;
+    background: var(--primary);
+    border-radius: 2px;
+}

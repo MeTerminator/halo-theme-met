@@ -6,6 +6,9 @@
     <th:block th:replace="~{modules/widgets/sidebar/profile}" />
   </div>
   <div id="sidebar-sticky" class="sticky top-4 flex w-full flex-col gap-4 transition-all duration-700">
+    <th:block th:if="${post != null or page != null}">
+      <th:block th:replace="~{modules/widgets/sidebar/toc}" />
+    </th:block>
     <th:block th:each="sidebar : ${theme.config.sidebar.widgets}">
       <th:block th:switch="${sidebar.value}">
         <th:block th:case="'categories'">

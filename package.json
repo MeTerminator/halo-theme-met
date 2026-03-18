@@ -26,7 +26,8 @@
     "postcss-import": "^16.1.1",
     "preact": "^10.27.1",
     "pupa": "^3.1.0",
-    "swup": "^4.8.2"
+    "swup": "^4.8.2",
+    "tocbot": "^4.36.4"
   },
   "devDependencies": {
     "@halo-dev/theme-package-cli": "^1.0.0",

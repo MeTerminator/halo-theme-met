@@ -9,10 +9,12 @@ import "./styles/scrollbar.css";
 import "./styles/transition.css";
 import "./styles/markdown.css";
 import "./styles/photoswipe.css";
+import "./styles/toc.css";
 
 import "overlayscrollbars/overlayscrollbars.css";
 import "photoswipe/style.css";
 
+import tocbot from "tocbot";
 import Alpine from "alpinejs";
 import Swup from "swup";
 import SwupHeadPlugin from "@swup/head-plugin";
@@ -114,6 +116,36 @@ function mountWidgets() {
   if (tocContainer) {
     mountToc(tocContainer as HTMLElement);
   }
+}
+
+export function generateToc(): void {
+  const content = document.getElementById("content");
+  // 确保扫描到 h1-h4
+  const titles = content?.querySelectorAll("h1, h2, h3, h4");
+
+  const tocContainer = document.querySelector(".toc-container");
+  if (!titles || titles.length === 0) {
+    tocContainer?.classList.add("hidden");
+    return;
+  }
+  tocContainer?.classList.remove("hidden");
+
+  // 先销毁旧实例防止冲突
+  tocbot.destroy();
+
+  tocbot.init({
+    tocSelector: ".toc",
+    contentSelector: "#content",
+    headingSelector: "h1, h2, h3, h4",
+    orderedList: false,
+    collapseDepth: 0,
+    extraListClasses: "space-y-1 ml-2",
+    extraLinkClasses:
+      "group block rounded py-1 px-2 transition-all hover:bg-black/5 dark:hover:bg-white/5 text-sm opacity-70",
+    activeLinkClass: "is-active-link !opacity-100 !text-[var(--primary)] font-bold",
+    headingsOffset: 80,
+    scrollSmooth: true,
+  });
 }
 
 // 新增：初始化笔记块函数
@@ -506,6 +538,7 @@ swup.hooks.on("content:replace", () => {
   console.log("Content replaced");
   // mountWidgets();
   initNoteBlocks(); // 新增：内容替换后额外调用（确保 Swup 钩子中已调用，但这里作为备份）
+  generateToc();
 });
 
 // 页面初始加载
@@ -513,4 +546,5 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
   mountWidgets();
   initNoteBlocks(); // 新增：DOM 加载后额外调用（确保初始加载生效）
+  generateToc();
 });
