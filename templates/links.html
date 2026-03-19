@@ -5,6 +5,16 @@
 >
   <th:block th:fragment="content">
     <div class="card-base px-8 py-6">
+      <div class="mb-10 flex justify-center">
+        <a
+          href="/links-submit"
+          class="btn-regular group flex h-11 items-center gap-2 rounded-xl px-6 text-sm font-bold transition-all active:scale-95"
+        >
+          <span class="icon-[tabler--link-plus] text-lg text-[var(--primary)]"></span>
+          <span class="text-black/70 group-hover:text-[var(--primary)] dark:text-white/70">申请友链</span>
+        </a>
+      </div>
+
       <th:block th:each="group : ${groups}">
         <div class="mt-5">
           <h2 th:text="${group.spec.displayName}" class="my-2 text-lg font-medium md:text-xl"></h2>
